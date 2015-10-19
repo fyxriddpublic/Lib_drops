@@ -1,0 +1,32 @@
+#################################
+#####       掉落配置        #####
+#################################
+drops:
+  zombie_drop:                 #掉落配置名
+    - "zombie_drop 100"       #掉落数据,格式'掉落信息名 概率'
+  skeleton_drop:
+    - "skeleton_drop 100"
+
+#################################
+#####       掉落信息        #####
+#################################
+infos:
+  #提示: 配置可以不全
+  zombie_drop:                 #掉落信息名
+    money:                     #掉落金钱,max>=min>=0
+      min: 2
+      max: 5
+    exp:                      #掉落经验,max>=min>=0
+      instant: true             #是否直接加给玩家,false时掉到地上(默认false)
+      min: 1
+      max: 4
+    item:                     #掉落物品
+      type: "zombie_drop"     #掉落物品获取类型
+      enchants: ""            #掉落物品附魔类型
+    entity:                   #掉落实体
+      types:                  #格式'实体ID/enum值 数量,>=0 概率,>=0 [加强类型]'
+        - "90 1 100 normal"
+        - "91 1 50"
+    tip:                       #掉落提示
+      lang: 30                 #语言ID
+      range: true              #是否范围显示,true时范围显示,false时显示给目标玩家(默认false)

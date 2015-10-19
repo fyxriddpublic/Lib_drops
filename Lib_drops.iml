@@ -38,5 +38,7 @@
     <orderEntry type="library" scope="PROVIDED" name="Maven: com.fyxridd.lib:SqliteDialect:1.0" level="project" />
     <orderEntry type="module" module-name="Lib_types" scope="PROVIDED" />
     <orderEntry type="module" module-name="Lib_items" scope="PROVIDED" />
+    <orderEntry type="module" module-name="Lib_enchants" scope="PROVIDED" />
+    <orderEntry type="module" module-name="Strength" scope="PROVIDED" />
   </component>
 </module>

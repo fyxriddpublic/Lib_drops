@@ -141,5 +141,19 @@
             <version>[1.0.0,)</version>
             <scope>provided</scope>
         </dependency>
+        <!--Lib_enchants-->
+        <dependency>
+            <groupId>com.fyxridd</groupId>
+            <artifactId>Lib_enchants</artifactId>
+            <version>[1.0.0,)</version>
+            <scope>provided</scope>
+        </dependency>
+        <!--Strength-->
+        <dependency>
+            <groupId>com.fyxridd</groupId>
+            <artifactId>Strength</artifactId>
+            <version>[1.0.0,)</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 </project>
