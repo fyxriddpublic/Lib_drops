@@ -33,7 +33,7 @@ public class DropsConfig implements Listener {
         YamlConfiguration config = ConfigApi.getConfig(DropsPlugin.pn);
 
         //重新读取类型
-        TypesApi.reloadTypes(DropsPlugin.pn, new File(DropsPlugin.dataPath, "types.yml"));
+        TypesApi.reloadTypes(DropsPlugin.pn);
         //重新读取物品
         ItemsApi.reloadItems(DropsPlugin.pn, (MemorySection) config.get("items"));
     }
