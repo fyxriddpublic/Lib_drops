@@ -18,7 +18,7 @@ public class DropsMain implements Listener {
     }
 
     private void initConfig() {
-        ConfigApi.register(DropsPlugin.file, DropsPlugin.dataPath, DropsPlugin.pn, null);
+        ConfigApi.register(DropsPlugin.file, DropsPlugin.dataPath, DropsPlugin.pn);
         ConfigApi.loadConfig(DropsPlugin.pn);
     }
 }
