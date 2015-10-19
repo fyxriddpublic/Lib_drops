@@ -38,11 +38,6 @@ public class DropsMain implements Listener {
         dropsConfig = new DropsConfig();
     }
 
-    private void initConfig() {
-        ConfigApi.register(DropsPlugin.file, DropsPlugin.dataPath, DropsPlugin.pn);
-        ConfigApi.loadConfig(DropsPlugin.pn);
-    }
-
     public void reloadDrops(String plugin) {
         reloadDrops(plugin, CoreApi.loadConfigByUTF8(new File(CoreApi.pluginPath, plugin+"/drops.yml")));
     }
@@ -50,7 +45,7 @@ public class DropsMain implements Listener {
     /**
      * @see com.fyxridd.lib.drops.api.DropsApi#reloadDrops(String)
      */
-    private void reloadDrops(String plugin, YamlConfiguration config) {
+    public void reloadDrops(String plugin, YamlConfiguration config) {
         //重置缓存
         HashMap<String, Drop> dropHash = new HashMap<>();
         drops.put(plugin, dropHash);
@@ -206,6 +201,11 @@ public class DropsMain implements Listener {
         else entityInfo = null;
         FancyMessage tipMsg = info.getTipMsg();
         return new DropInfo(money, exp, item, entityInfo!=null?entityInfo.getType():null, entityInfo!=null?entityInfo.getStrength():null, entityInfo!=null?entityInfo.getAmount():0, tipMsg);
+    }
+
+    private void initConfig() {
+        ConfigApi.register(DropsPlugin.file, DropsPlugin.dataPath, DropsPlugin.pn);
+        ConfigApi.loadConfig(DropsPlugin.pn);
     }
 
     private static FancyMessage get(int id, Object... args) {
