@@ -11,6 +11,7 @@ public class DropInfo {
     private int money;
 
     //exp
+    private boolean expInstant;
     private int exp;
 
     //item
@@ -23,19 +24,26 @@ public class DropInfo {
 
     //tip
     private FancyMessage tip;//可为null
+    private boolean tipRange;
 
-    public DropInfo(int money, int exp, List<ItemStack> item, EntityType entityType, String strength, int entityAmount, FancyMessage tip) {
+    public DropInfo(int money, boolean expInstant, int exp, List<ItemStack> item, EntityType entityType, String strength, int entityAmount, FancyMessage tip, boolean tipRange) {
         this.money = money;
+        this.expInstant = expInstant;
         this.exp = exp;
         this.item = item;
         this.entityType = entityType;
         this.strength = strength;
         this.entityAmount = entityAmount;
         this.tip = tip;
+        this.tipRange = tipRange;
     }
 
     public int getMoney() {
         return money;
+    }
+
+    public boolean isExpInstant() {
+        return expInstant;
     }
 
     public int getExp() {
@@ -60,5 +68,9 @@ public class DropInfo {
 
     public FancyMessage getTip() {
         return tip;
+    }
+
+    public boolean isTipRange() {
+        return tipRange;
     }
 }

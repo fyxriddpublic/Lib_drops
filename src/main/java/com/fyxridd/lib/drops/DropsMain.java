@@ -114,93 +114,73 @@ public class DropsMain implements Listener {
      * @see com.fyxridd.lib.drops.api.DropsApi#drop(String, String, org.bukkit.Location, org.bukkit.entity.Player)
      */
     public void drop(String plugin, String type, Location loc, Player p) {
+        //获取掉落
+        DropInfo dropInfo = getDrops(plugin, type);
+        //掉落
+        if (p != null && dropInfo.getMoney() > 0) {
+            EcoApi.add(p, dropInfo.getMoney());
+            ShowApi.tip(p, get(20, dropInfo.getMoney()), true);
+        }
+        if (dropInfo.getExp() > 0) {
+            if (dropInfo.isExpInstant()) {
+                if (p != null) {
+                    p.giveExp(dropInfo.getExp());
+                    ShowApi.tip(p, get(30, dropInfo.getExp()), true);
+                }
+            }else {
+                ExperienceOrb orb = (ExperienceOrb) loc.getWorld().spawnEntity(loc, EntityType.EXPERIENCE_ORB);
+                orb.setExperience(dropInfo.getExp());
+            }
+        }
+        if (dropInfo.getItem() != null) {
+            for (ItemStack is:dropInfo.getItem()) {
+                loc.getWorld().dropItemNaturally(loc, is);
+            }
+        }
+        if (dropInfo.getEntityType() != null) {
+            for (int index=0;index<dropInfo.getEntityAmount();index++) {
+                Entity entity = loc.getWorld().spawnEntity(loc, dropInfo.getEntityType());
+                if (dropInfo.getStrength() != null && entity instanceof LivingEntity) {
+                    LivingEntity le = (LivingEntity) entity;
+                    StrengthApi.strength(le, dropInfo.getStrength(), true);
+                }
+            }
+        }
+        if (dropInfo.getTip() != null) {
+            if (dropInfo.isTipRange()) CoreApi.sendMsg(loc, DropsConfig.tipRange, false, dropInfo.getTip(), false);
+            else if (p != null) ShowApi.tip(p, dropInfo.getTip(), true);
+        }
+    }
+
+    public DropInfo getDrops(String plugin, String type) {
         HashMap<String, Drop> dropHash = drops.get(plugin);
         if (dropHash != null) {
             Drop drop = dropHash.get(type);
-            if (drop != null) {
+            if (drop != null && drop.getInfos() != null && !drop.getInfos().isEmpty()) {
                 String infoName = drop.getInfos().getRandom();
                 HashMap<String, Info> infoHash = infos.get(plugin);
                 if (infoHash != null) {
                     Info info = infoHash.get(infoName);
                     if (info != null) {
                         //解析
-                        DropInfo dropInfo = getDropInfo(info);
-                        boolean tipRange = info.isTipRange();
-                        //掉落
-                        if (p != null && dropInfo.getMoney() > 0) {
-                            EcoApi.add(p, dropInfo.getMoney());
-                            ShowApi.tip(p, get(20, dropInfo.getMoney()), true);
-                        }
-                        if (dropInfo.getExp() > 0) {
-                            if (info.isExpInstant()) {
-                                if (p != null) {
-                                    p.giveExp(dropInfo.getExp());
-                                    ShowApi.tip(p, get(30, dropInfo.getExp()), true);
-                                }
-                            }else {
-                                ExperienceOrb orb = (ExperienceOrb) loc.getWorld().spawnEntity(loc, EntityType.EXPERIENCE_ORB);
-                                orb.setExperience(dropInfo.getExp());
+                        int money = CoreApi.Random.nextInt(info.getMoneyMax()-info.getMoneyMin()+1)+info.getMoneyMin();
+                        int exp = CoreApi.Random.nextInt(info.getExpMax()-info.getExpMin()+1)+info.getExpMin();
+                        List<ItemStack> item;
+                        if (info.getItemType() != null) {
+                            item = ItemsApi.getItems(info.getPlugin(), info.getItemType());
+                            if (!item.isEmpty() && info.getItemEnchants() != null) {
+                                for (ItemStack is:item) EnchantsApi.addEnchant(info.getPlugin(), info.getItemEnchants(), is);
                             }
-                        }
-                        if (dropInfo.getItem() != null) {
-                            for (ItemStack is:dropInfo.getItem()) {
-                                loc.getWorld().dropItemNaturally(loc, is);
-                            }
-                        }
-                        if (dropInfo.getEntityType() != null) {
-                            for (int index=0;index<dropInfo.getEntityAmount();index++) {
-                                Entity entity = loc.getWorld().spawnEntity(loc, dropInfo.getEntityType());
-                                if (dropInfo.getStrength() != null && entity instanceof LivingEntity) {
-                                    LivingEntity le = (LivingEntity) entity;
-                                    StrengthApi.strength(le, dropInfo.getStrength(), true);
-                                }
-                            }
-                        }
-                        if (dropInfo.getTip() != null) {
-                            if (tipRange) CoreApi.sendMsg(loc, DropsConfig.tipRange, false, dropInfo.getTip(), false);
-                            else if (p != null) ShowApi.tip(p, dropInfo.getTip(), true);
-                        }
+                        }else item = null;
+                        EntityInfo entityInfo;
+                        if (info.getEntity() != null && !info.getEntity().isEmpty()) entityInfo = info.getEntity().getRandom();
+                        else entityInfo = null;
+                        return new DropInfo(money, info.isExpInstant(), exp, item, entityInfo!=null?entityInfo.getType():null, entityInfo!=null?entityInfo.getStrength():null, entityInfo!=null?entityInfo.getAmount():0, info.getTipMsg(), info.isTipRange());
                     }
                 }
             }
         }
-    }
-
-    /**
-     * @see com.fyxridd.lib.drops.api.DropsApi#getDrops(String, String)
-     */
-    public DropInfo getDrops(String plugin, String type) {
-        HashMap<String, Drop> dropHash = drops.get(plugin);
-        if (dropHash != null) {
-            Drop drop = dropHash.get(type);
-            if (drop != null) {
-                String infoName = drop.getInfos().getRandom();
-                HashMap<String, Info> infoHash = infos.get(plugin);
-                if (infoHash != null) {
-                    Info info = infoHash.get(infoName);
-                    if (info != null) return getDropInfo(info);
-                }
-            }
-        }
         return null;
-    }
-
-    private DropInfo getDropInfo(Info info) {
-        //解析
-        int money = CoreApi.Random.nextInt(info.getMoneyMax()-info.getMoneyMin()+1)+info.getMoneyMin();
-        int exp = CoreApi.Random.nextInt(info.getExpMax()-info.getExpMin()+1)+info.getExpMin();
-        List<ItemStack> item;
-        if (info.getItemType() != null) {
-            item = ItemsApi.getItems(info.getPlugin(), info.getItemType());
-            if (!item.isEmpty() && info.getItemEnchants() != null) {
-                for (ItemStack is:item) EnchantsApi.addEnchant(info.getPlugin(), info.getItemEnchants(), is);
-            }
-        }else item = null;
-        EntityInfo entityInfo;
-        if (info.getEntity() != null && !info.getEntity().isEmpty()) entityInfo = info.getEntity().getRandom();
-        else entityInfo = null;
-        FancyMessage tipMsg = info.getTipMsg();
-        return new DropInfo(money, exp, item, entityInfo!=null?entityInfo.getType():null, entityInfo!=null?entityInfo.getStrength():null, entityInfo!=null?entityInfo.getAmount():0, tipMsg);
     }
 
     private void initConfig() {
