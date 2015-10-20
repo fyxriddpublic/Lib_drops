@@ -105,7 +105,7 @@ public class DropsMain implements Listener {
                 boolean tipRange = infoMs.getBoolean("tip.range");
 
                 //添加
-                infoHash.put(infoName, new Info(moneyMin, moneyMax, expInstant, expMin, expMax, itemType, itemEnchants, entity, tipMsg, tipRange));
+                infoHash.put(infoName, new Info(plugin, moneyMin, moneyMax, expInstant, expMin, expMax, itemType, itemEnchants, entity, tipMsg, tipRange));
             }
         }
     }
@@ -191,9 +191,9 @@ public class DropsMain implements Listener {
         int exp = CoreApi.Random.nextInt(info.getExpMax()-info.getExpMin()+1)+info.getExpMin();
         List<ItemStack> item;
         if (info.getItemType() != null) {
-            item = ItemsApi.getItems(DropsPlugin.pn, info.getItemType());
+            item = ItemsApi.getItems(info.getPlugin(), info.getItemType());
             if (!item.isEmpty() && info.getItemEnchants() != null) {
-                for (ItemStack is:item) EnchantsApi.addEnchant(DropsPlugin.pn, info.getItemEnchants(), is);
+                for (ItemStack is:item) EnchantsApi.addEnchant(info.getPlugin(), info.getItemEnchants(), is);
             }
         }else item = null;
         EntityInfo entityInfo;

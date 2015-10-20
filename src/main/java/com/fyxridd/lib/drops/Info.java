@@ -7,6 +7,7 @@ import com.fyxridd.lib.core.api.inter.FancyMessage;
  * 掉落信息
  */
 public class Info {
+    private String plugin;
     private int moneyMin, moneyMax;
 
     private boolean expInstant;
@@ -20,7 +21,8 @@ public class Info {
     private FancyMessage tipMsg;
     private boolean tipRange;
 
-    public Info(int moneyMin, int moneyMax, boolean expInstant, int expMin, int expMax, String itemType, String itemEnchants, ChanceHashList<EntityInfo> entity, FancyMessage tipMsg, boolean tipRange) {
+    public Info(String plugin, int moneyMin, int moneyMax, boolean expInstant, int expMin, int expMax, String itemType, String itemEnchants, ChanceHashList<EntityInfo> entity, FancyMessage tipMsg, boolean tipRange) {
+        this.plugin = plugin;
         this.moneyMin = moneyMin;
         this.moneyMax = moneyMax;
         this.expInstant = expInstant;
@@ -31,6 +33,10 @@ public class Info {
         this.entity = entity;
         this.tipMsg = tipMsg;
         this.tipRange = tipRange;
+    }
+
+    public String getPlugin() {
+        return plugin;
     }
 
     public int getMoneyMin() {
