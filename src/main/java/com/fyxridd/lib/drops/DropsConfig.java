@@ -5,7 +5,6 @@ import com.fyxridd.lib.core.api.event.ReloadConfigEvent;
 import com.fyxridd.lib.drops.api.DropsPlugin;
 import com.fyxridd.lib.enchants.api.EnchantsApi;
 import com.fyxridd.lib.items.api.ItemsApi;
-import com.fyxridd.lib.types.api.TypesApi;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.MemorySection;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -38,8 +37,6 @@ public class DropsConfig implements Listener {
             ConfigApi.log(DropsPlugin.pn, "tipRange < 0");
         }
 
-        //重新读取类型
-        TypesApi.reloadTypes(DropsPlugin.pn);
         //重新读取物品
         ItemsApi.reloadItems(DropsPlugin.pn, (MemorySection) config.get("items"));
         //重新读取附魔

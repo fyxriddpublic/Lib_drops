@@ -127,13 +127,6 @@
             <version>[1.0.0,)</version>
             <scope>provided</scope>
         </dependency>
-        <!--Lib_types-->
-        <dependency>
-            <groupId>com.fyxridd</groupId>
-            <artifactId>Lib_types</artifactId>
-            <version>[1.0.0,)</version>
-            <scope>provided</scope>
-        </dependency>
         <!--Lib_items-->
         <dependency>
             <groupId>com.fyxridd</groupId>

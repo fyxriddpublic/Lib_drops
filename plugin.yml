@@ -1,5 +1,5 @@
 name: Lib_drops
 main: com.fyxridd.lib.drops.api.DropsPlugin
 version: 1.0.0
-depend: [Lib_core, Lib_types, Lib_items, Lib_enchants, Strength]
+depend: [Lib_core, Lib_items, Lib_enchants, Strength]
 softdepend:
