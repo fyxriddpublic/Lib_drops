@@ -134,7 +134,7 @@ public class DropsMain implements Listener {
         }
         if (dropInfo.getItem() != null) {
             for (ItemStack is:dropInfo.getItem()) {
-                loc.getWorld().dropItemNaturally(loc, is);
+                loc.getWorld().dropItem(loc, is);
             }
         }
         if (dropInfo.getEntityType() != null) {
