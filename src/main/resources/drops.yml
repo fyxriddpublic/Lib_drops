@@ -22,7 +22,7 @@ infos:
       max: 4
     item:                     #掉落物品
       type: "zombie_drop"     #掉落物品获取类型
-      enchants: ""            #掉落物品附魔类型
+      enchants: ""            #掉落物品附魔类型(会使用此配置所属插件的附魔类型配置)
     entity:                   #掉落实体
       types:                  #格式'实体ID/enum值 数量,>=0 概率,>=0 [加强类型]'
         - "90 1 100 normal"
