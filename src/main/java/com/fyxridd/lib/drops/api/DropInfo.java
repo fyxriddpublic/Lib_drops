@@ -19,20 +19,20 @@ public class DropInfo {
 
     //entity
     private EntityType entityType;//可为null
-    private String strength;//可为null
+    private String strengthType;//加强配置名,可为null
     private int entityAmount;
 
     //tip
     private FancyMessage tip;//可为null
     private boolean tipRange;
 
-    public DropInfo(int money, boolean expInstant, int exp, List<ItemStack> item, EntityType entityType, String strength, int entityAmount, FancyMessage tip, boolean tipRange) {
+    public DropInfo(int money, boolean expInstant, int exp, List<ItemStack> item, EntityType entityType, String strengthType, int entityAmount, FancyMessage tip, boolean tipRange) {
         this.money = money;
         this.expInstant = expInstant;
         this.exp = exp;
         this.item = item;
         this.entityType = entityType;
-        this.strength = strength;
+        this.strengthType = strengthType;
         this.entityAmount = entityAmount;
         this.tip = tip;
         this.tipRange = tipRange;
@@ -58,8 +58,8 @@ public class DropInfo {
         return entityType;
     }
 
-    public String getStrength() {
-        return strength;
+    public String getStrengthType() {
+        return strengthType;
     }
 
     public int getEntityAmount() {

@@ -140,9 +140,9 @@ public class DropsMain implements Listener {
         if (dropInfo.getEntityType() != null) {
             for (int index=0;index<dropInfo.getEntityAmount();index++) {
                 Entity entity = loc.getWorld().spawnEntity(loc, dropInfo.getEntityType());
-                if (dropInfo.getStrength() != null && entity instanceof LivingEntity) {
+                if (dropInfo.getStrengthType() != null && entity instanceof LivingEntity) {
                     LivingEntity le = (LivingEntity) entity;
-                    StrengthApi.strength(le, dropInfo.getStrength(), true);
+                    StrengthApi.strength(le, dropInfo.getStrengthType(), true);
                 }
             }
         }
