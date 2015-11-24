@@ -28,5 +28,5 @@ infos:
         - "90 1 100 normal"
         - "91 1 50"
     tip:                       #掉落提示
-      lang: 30                 #语言ID
+      lang: 30                 #语言ID(会使用此配置所属插件的语言文本)
       range: true              #是否范围显示,true时范围显示,false时显示给目标玩家(默认false)

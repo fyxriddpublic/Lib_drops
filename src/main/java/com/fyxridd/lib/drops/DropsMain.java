@@ -101,7 +101,7 @@ public class DropsMain implements Listener {
                 }
 
                 //tip
-                FancyMessage tipMsg = infoMs.contains("tip.lang")?get(infoMs.getInt("tip.lang")):null;
+                FancyMessage tipMsg = infoMs.contains("tip.lang")?FormatApi.get(plugin, infoMs.getInt("tip.lang")):null;
                 boolean tipRange = infoMs.getBoolean("tip.range");
 
                 //添加
