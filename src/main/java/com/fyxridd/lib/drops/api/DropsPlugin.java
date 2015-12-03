@@ -9,6 +9,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 
 public class DropsPlugin extends JavaPlugin{
+    public static boolean strengthHook;
     public static DropsPlugin instance;
     public static File file;
     public static String pn;
@@ -17,6 +18,12 @@ public class DropsPlugin extends JavaPlugin{
 
     @Override
     public void onLoad() {
+        try {
+            Class.forName("com.fyxridd.strength.api.StrengthApi");
+            strengthHook = true;
+        } catch (ClassNotFoundException e) {
+            strengthHook = false;
+        }
         instance = this;
         file = getFile();
         pn = getName();
